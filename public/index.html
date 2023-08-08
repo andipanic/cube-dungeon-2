@@ -3,24 +3,45 @@
 <head>
   <meta name="viewport" content="width=device-width" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+
+    }
+
     body {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-      margin: 0;
       background: black;
     }
-dxsdaw
-    input::placeholder {
+
+    dxsdaw input::placeholder {
       color: #94a3b8;
     }
 
     h1 {
-      padding-left: 10px;
+      padding-left: 15px;
       color: white;
       font-family: Courier, monospace;
-      letter-spacing: .75em;
+      letter-spacing: .70em;
       text-align: center;
+      position: absolute;
+      top: 0;
+    }
+
+    #container {
+      position: relative;
+    }
+
+    #canvas,
+    #overlay {
+      position: absolute;
+    }
+
+    #overlay {
+      top: 45px;
+      left: 15px;
     }
 
     #canvas {
@@ -30,14 +51,19 @@ dxsdaw
       margin: auto auto;
       border-radius: 10px;
       border: 7px double white;
-      z-index: 7;
+      top: 30px;
     }
   </style>
 </head>
 
 <body id="body" style="display: flex; align-items: center; justify-content: center">
-  <div>
-    <div style="
+  <h1>CUBE DUNGEON</h1>
+  <div id="container">
+    
+    <canvas id="canvas" style="position: relative;"></canvas>
+    <div id="overlay">
+
+      <div style="
           position: absolute;
           color: white;
           padding: 8px;
@@ -45,18 +71,13 @@ dxsdaw
           font-size: 14px;
           user-select: none;
           background: rgba(0, 0, 0, 0.5);
-          top: 512px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          left: 0;
-          right: 0;
+          top: 0px;
         ">
-      <div style="margin-bottom: 8px">Leaderboard</div>
-      <div id="playerLabels"></div>
+        <div style="margin-bottom: 8px">Leaderboard</div>
+        <div id="playerLabels"></div>
+      </div>
     </div>
-    <h1>CUBE DUNGEON</h1>
-    <canvas id="canvas"></canvas>
+
 
     <!-- username input -->
     <div style="

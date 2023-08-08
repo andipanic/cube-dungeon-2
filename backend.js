@@ -96,18 +96,18 @@ io.on('connection', (socket) => {
     }
 
     const playerSides = {
-      left: backEndPlayer.x - backEndPlayer.radius,
+      left: backEndPlayer.x,
       right: backEndPlayer.x + backEndPlayer.radius,
-      top: backEndPlayer.y - backEndPlayer.radius,
+      top: backEndPlayer.y,
       bottom: backEndPlayer.y + backEndPlayer.radius
     }
 
-    if (playerSides.left < 0) backEndPlayers[socket.id].x = backEndPlayer.radius
+    if (playerSides.left < 0) backEndPlayers[socket.id].x = 0
 
     if (playerSides.right > 512)
       backEndPlayers[socket.id].x = 512 - backEndPlayer.radius
 
-    if (playerSides.top < 0) backEndPlayers[socket.id].y = backEndPlayer.radius
+    if (playerSides.top < 0) backEndPlayers[socket.id].y = 0
 
     if (playerSides.bottom > 512)
       backEndPlayers[socket.id].y = 512 - backEndPlayer.radius
