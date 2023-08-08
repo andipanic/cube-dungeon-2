@@ -29,17 +29,6 @@ document.querySelector('#usernameForm').addEventListener('submit', (event) => {
     devicePixelRatio,
     username: document.querySelector('#usernameInput').value
   })
-
-  return joystick = new VirtualJoystick({
-    container: document.getElementById('body'),
-    strokeStyle: 'white',
-    mouseSupport: true,
-    stationaryBase: true,
-    baseX: (window.innerWidth / 2) - 4,
-    baseY: (window.innerHeight / 5) * 4,
-    limitStickTravel: true,
-    stickRadius: 50
-  })
 })
 
 socket.on('updateProjectiles', (backEndProjectiles) => {
@@ -145,7 +134,6 @@ socket.on('updatePlayers', (backEndPlayers) => {
       }
 
       delete frontEndPlayers[id]
-      joystick = 0;
     }
   }
 })
@@ -202,28 +190,28 @@ const SPEED = 5
 const playerInputs = []
 let sequenceNumber = 0
 setInterval(() => {
-  if (keys.w.pressed || joystick.up()) {
+  if (keys.w.pressed) {
     sequenceNumber++
     playerInputs.push({ sequenceNumber, dx: 0, dy: -SPEED })
     // frontEndPlayers[socket.id].y -= SPEED
     socket.emit('keydown', { keycode: 'KeyW', sequenceNumber })
   }
 
-  if (keys.a.pressed || joystick.left()) {
+  if (keys.a.pressed) {
     sequenceNumber++
     playerInputs.push({ sequenceNumber, dx: -SPEED, dy: 0 })
     // frontEndPlayers[socket.id].x -= SPEED
     socket.emit('keydown', { keycode: 'KeyA', sequenceNumber })
   }
 
-  if (keys.s.pressed || joystick.down()) {
+  if (keys.s.pressed) {
     sequenceNumber++
     playerInputs.push({ sequenceNumber, dx: 0, dy: SPEED })
     // frontEndPlayers[socket.id].y += SPEED
     socket.emit('keydown', { keycode: 'KeyS', sequenceNumber })
   }
 
-  if (keys.d.pressed || joystick.right()) {
+  if (keys.d.pressed) {
     sequenceNumber++
     playerInputs.push({ sequenceNumber, dx: SPEED, dy: 0 })
     // frontEndPlayers[socket.id].x += SPEED
