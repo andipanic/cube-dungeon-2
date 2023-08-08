@@ -20,7 +20,27 @@ const y = canvas.height / 2
 const frontEndPlayers = {}
 const frontEndProjectiles = {}
 
-var joystick;
+document.querySelector('#usernameForm').addEventListener('submit', (event) => {
+  event.preventDefault()
+  document.querySelector('#usernameForm').style.display = 'none'
+  socket.emit('initGame', {
+    width: canvas.width,
+    height: canvas.height,
+    devicePixelRatio,
+    username: document.querySelector('#usernameInput').value
+  })
+
+  return joystick = new VirtualJoystick({
+    container: document.getElementById('body'),
+    strokeStyle: 'white',
+    mouseSupport: true,
+    stationaryBase: true,
+    baseX: (window.innerWidth / 2) - 4,
+    baseY: (window.innerHeight / 5) * 4,
+    limitStickTravel: true,
+    stickRadius: 50
+  })
+})
 
 socket.on('updateProjectiles', (backEndProjectiles) => {
   for (const id in backEndProjectiles) {
@@ -60,16 +80,6 @@ socket.on('updatePlayers', (backEndPlayers) => {
         username: backEndPlayer.username
       })
 
-      joystick = new VirtualJoystick({
-        container: document.getElementById('body'),
-        strokeStyle: 'white',
-        mouseSupport: true,
-        stationaryBase: true,
-        baseX: (window.innerWidth / 2) - 4,
-        baseY: (window.innerHeight / 5) * 4,
-        limitStickTravel: true,
-        stickRadius: 50
-      })
       document.querySelector(
         '#playerLabels'
       ).innerHTML += `<div data-id="${id}" data-score="${backEndPlayer.score}">${backEndPlayer.username}: ${backEndPlayer.score}</div>`
@@ -135,6 +145,7 @@ socket.on('updatePlayers', (backEndPlayers) => {
       }
 
       delete frontEndPlayers[id]
+      joystick = 0;
     }
   }
 })
@@ -264,14 +275,3 @@ window.addEventListener('keyup', (event) => {
   }
 })
 
-document.querySelector('#usernameForm').addEventListener('submit', (event) => {
-  event.preventDefault()
-  document.querySelector('#usernameForm').style.display = 'none'
-  socket.emit('initGame', {
-    width: canvas.width,
-    height: canvas.height,
-    devicePixelRatio,
-    username: document.querySelector('#usernameInput').value
-  })
-
-})
